@@ -7,10 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.capston.bellywelly.domain.member.entity.Member;
 import com.capston.bellywelly.domain.record.dto.StressWeekDto;
@@ -27,11 +25,11 @@ public class StressService {
 	private final StressRepository stressRepository;
 
 	public void createStress(Member member, Integer degree) {
-		LocalDate today = LocalDate.now();
-		if (stressRepository.existsByMemberAndCreatedDateBetween(member, today.atStartOfDay(),
-			today.atTime(23, 59, 59, 999999999))) {
-			throw new ResponseStatusException(HttpStatus.CONFLICT, "이미 오늘의 스트레스 기록이 존재합니다.");
-		}
+		// LocalDate today = LocalDate.now();
+		// if (stressRepository.existsByMemberAndCreatedDateBetween(member, today.atStartOfDay(),
+		// 	today.atTime(23, 59, 59, 999999999))) {
+		// 	throw new ResponseStatusException(HttpStatus.CONFLICT, "이미 오늘의 스트레스 기록이 존재합니다.");
+		// }
 		stressRepository.save(
 			Stress.builder()
 				.member(member)
