@@ -7,9 +7,7 @@ import lombok.Getter;
 @Builder
 public class DefecationStressReportResponseDto {
 
-	private Integer year;
-	private Integer month;
-	private Integer week;
+	private WeekDto week;
 	private String feedback;
 	private DefecationStressGraphDto graphDto;
 	private String defecationAnalysis;
