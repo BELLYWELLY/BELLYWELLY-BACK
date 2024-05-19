@@ -5,12 +5,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.capston.bellywelly.domain.recommendation.dto.GptRecRequestDto;
-import com.capston.bellywelly.domain.recommendation.dto.GptRecResponseDto;
 import com.capston.bellywelly.domain.record.entity.Diet;
 import com.capston.bellywelly.domain.record.service.DietService;
 import com.capston.bellywelly.domain.record.service.MealService;
 import com.capston.bellywelly.global.feign.client.GptRecClient;
+import com.capston.bellywelly.global.feign.dto.GptDietRequestDto;
+import com.capston.bellywelly.global.feign.dto.GptResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,8 +22,8 @@ public class RecommendationService {
 	private final DietService dietService;
 	private final MealService mealService;
 
-	public GptRecResponseDto getRecommendation() {
-		return gptRecClient.getRecommendedDiet(new GptRecRequestDto(getTodayMealList()));
+	public GptResponseDto getRecommendation() {
+		return gptRecClient.getRecommendedDiet(new GptDietRequestDto(getTodayMealList()));
 	}
 
 	public List<String> getTodayMealList() {
