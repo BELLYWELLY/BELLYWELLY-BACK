@@ -1,4 +1,4 @@
-package com.capston.bellywelly.domain.recommendation.dto;
+package com.capston.bellywelly.global.feign.dto;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class GptRecResponseDto {
+public class GptResponseDto {
 
 	private int status;
 	private List<String> data;
