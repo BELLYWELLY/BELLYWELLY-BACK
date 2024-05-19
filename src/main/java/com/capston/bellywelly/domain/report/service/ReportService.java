@@ -18,6 +18,7 @@ import com.capston.bellywelly.domain.report.dto.DefecationStressGraphDto;
 import com.capston.bellywelly.domain.report.dto.DefecationStressReportResponseDto;
 import com.capston.bellywelly.domain.report.dto.DietReportResponseDto;
 import com.capston.bellywelly.domain.report.dto.MealListDto;
+import com.capston.bellywelly.domain.report.dto.WeekDto;
 import com.capston.bellywelly.domain.report.entity.Report;
 import com.capston.bellywelly.domain.report.entity.ReportDefecationStress;
 import com.capston.bellywelly.domain.report.entity.ReportMeal;
@@ -65,7 +66,7 @@ public class ReportService {
 			.map(this::convertToMealListDto).toList();
 
 		return DietReportResponseDto.builder()
-			.year(report.getYear()).month(report.getMonth()).week(report.getWeek())
+			.week(getWeekDto(report.getYear(), report.getMonth(), report.getWeek()))
 			.feedback(report.getFeedback()).best(bestMealList).worst(worstMealList).build();
 	}
 
@@ -96,11 +97,15 @@ public class ReportService {
 			.map(ReportDefecationStress::getStressDegree).toList();
 
 		return DefecationStressReportResponseDto.builder()
-			.year(report.getYear()).month(report.getMonth()).week(report.getWeek())
+			.week(getWeekDto(report.getYear(), report.getMonth(), report.getWeek()))
 			.feedback(report.getFeedback())
 			.graphDto(DefecationStressGraphDto.builder()
 				.defecation(defecationScoreList).stress(stressDegreeList).build())
 			.defecationAnalysis(report.getDefecationAnalysis())
 			.stressAnalysis(report.getStressAnalysis()).build();
+	}
+
+	public WeekDto getWeekDto(Integer year, Integer month, Integer week) {
+		return WeekDto.builder().year(year).month(month).week(week).build();
 	}
 }
