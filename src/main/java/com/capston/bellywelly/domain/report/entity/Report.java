@@ -36,7 +36,7 @@ public class Report extends BaseTimeEntity {
 	@Column(nullable = false)
 	private Integer week;
 
-	@Column(nullable = false)
+	@Column(nullable = false, columnDefinition = "text")
 	private String feedback;
 
 	@Column(nullable = false)
