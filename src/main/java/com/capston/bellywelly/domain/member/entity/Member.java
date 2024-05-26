@@ -18,17 +18,9 @@ public class Member {
 	@Column(nullable = false)
 	private String name;
 
-	@Column(nullable = false, length = 16)
-	private String sex;
-
-	@Column(nullable = false)
-	private String birthyear;
-
 	@Builder
-	public Member(Long memberId, String name, String sex, String birthyear) {
+	public Member(Long memberId, String name) {
 		this.memberId = memberId;
 		this.name = name;
-		this.sex = sex;
-		this.birthyear = birthyear;
 	}
 }

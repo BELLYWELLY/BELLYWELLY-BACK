@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class KakaoAccountDto {
+public class KaKaoProfileDto {
 
-	private KaKaoProfileDto profile;
+	private String nickname;
 }

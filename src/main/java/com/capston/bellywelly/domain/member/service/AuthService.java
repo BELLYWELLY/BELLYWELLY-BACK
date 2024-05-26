@@ -74,9 +74,7 @@ public class AuthService {
 			return memberRepository.save(
 				Member.builder()
 					.memberId(responseDto.getId())
-					.name(kakaoAccountDto.getName())
-					.sex(kakaoAccountDto.getGender())
-					.birthyear(kakaoAccountDto.getBirthyear())
+					.name(kakaoAccountDto.getProfile().getNickname())
 					.build()
 			);
 		}
