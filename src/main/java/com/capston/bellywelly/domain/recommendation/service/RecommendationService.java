@@ -1,5 +1,6 @@
 package com.capston.bellywelly.domain.recommendation.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class RecommendationService {
 	}
 
 	public List<String> getTodayMealList() {
-		List<Diet> todayDietList = dietService.findTodayDietList();
+		List<Diet> todayDietList = dietService.findDietListOfDay(LocalDate.now());
 		if (todayDietList.isEmpty()) {
 			return null;
 		}
