@@ -31,7 +31,9 @@ import com.capston.bellywelly.domain.report.repository.ReportDefecationStressRep
 import com.capston.bellywelly.domain.report.repository.ReportMealRepository;
 import com.capston.bellywelly.domain.report.repository.ReportRepository;
 import com.capston.bellywelly.global.feign.client.GptReportClient;
+import com.capston.bellywelly.global.feign.dto.DietBestWorstDto;
 import com.capston.bellywelly.global.feign.dto.GptDefecationStressRequestDto;
+import com.capston.bellywelly.global.feign.dto.GptDietRequestDto;
 import com.capston.bellywelly.global.feign.dto.GptFeedbackRequestDto;
 
 import lombok.RequiredArgsConstructor;
@@ -92,9 +94,12 @@ public class ReportService {
 			.stress(stressDegreeList)
 			.build();
 
+		GptDietRequestDto dietRequestDto = new GptDietRequestDto(mealNameList);
+
 		String feedback = gptReportClient.getReportFeedback(feedbackRequestDto).getData();
 		String defecationAnalysis = gptReportClient.getDefecationAnalysis(defecationStressRequestDto).getData();
 		String stressAnalysis = gptReportClient.getStressAnalysis(defecationStressRequestDto).getData();
+		DietBestWorstDto dietAnalysis = gptReportClient.getDietAnalysis(dietRequestDto).getData();
 
 		// Report, ReportMeal, ReportDefecationStress 생성
 		Report report = reportRepository.save(
@@ -114,6 +119,24 @@ public class ReportService {
 					.build()
 			);
 		}
+
+		dietAnalysis.getBest().forEach(best -> reportMealRepository.save(
+			ReportMeal.builder()
+				.report(report)
+				.meal(mealService.findMealByName(best.getName()))
+				.isBest(true)
+				.description(best.getDesc())
+				.build()
+		));
+
+		dietAnalysis.getWorst().forEach(best -> reportMealRepository.save(
+			ReportMeal.builder()
+				.report(report)
+				.meal(mealService.findMealByName(best.getName()))
+				.isBest(false)
+				.description(best.getDesc())
+				.build()
+		));
 
 	}
 

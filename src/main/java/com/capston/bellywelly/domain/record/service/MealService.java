@@ -116,4 +116,8 @@ public class MealService {
 			.filter(Objects::nonNull)
 			.map(Meal::getIsLowFodmap).toList();
 	}
+
+	public Meal findMealByName(String mealName) {
+		return mealRepository.findByMealName(mealName).orElse(null);
+	}
 }
