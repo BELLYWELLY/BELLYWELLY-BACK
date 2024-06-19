@@ -86,7 +86,7 @@ public class ReportService {
 			.defecation(defecationScoreList).stress(stressDegreeList)
 			.build();
 
-		String feedback = gptReportClient.getReportFeedback(requestDto).getData().get(0);
+		String feedback = gptReportClient.getReportFeedback(requestDto).getData();
 
 		// Report, ReportMeal, ReportDefecationStress 생성
 	}
