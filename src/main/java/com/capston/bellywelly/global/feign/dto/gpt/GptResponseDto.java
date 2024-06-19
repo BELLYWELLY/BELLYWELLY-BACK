@@ -1,6 +1,4 @@
-package com.capston.bellywelly.global.feign.dto;
-
-import java.util.List;
+package com.capston.bellywelly.global.feign.dto.gpt;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,5 +8,5 @@ import lombok.NoArgsConstructor;
 public class GptResponseDto {
 
 	private int status;
-	private List<String> data;
+	private String data;
 }

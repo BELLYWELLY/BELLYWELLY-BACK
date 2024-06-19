@@ -109,4 +109,15 @@ public class MealService {
 			return nutrientList.stream().map(nutrient -> (int)(nutrient / max * 100)).collect(Collectors.toList());
 		}
 	}
+
+	public List<Boolean> findIsLowFodmapList(List<String> mealNameList) {
+		List<Meal> mealList = findMealList(mealNameList);
+		return mealList.stream()
+			.filter(Objects::nonNull)
+			.map(Meal::getIsLowFodmap).toList();
+	}
+
+	public Meal findMealByName(String mealName) {
+		return mealRepository.findByMealName(mealName).orElse(null);
+	}
 }

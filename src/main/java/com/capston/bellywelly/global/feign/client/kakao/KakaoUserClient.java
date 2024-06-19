@@ -1,4 +1,4 @@
-package com.capston.bellywelly.global.feign.client;
+package com.capston.bellywelly.global.feign.client.kakao;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpHeaders;
@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-import com.capston.bellywelly.global.feign.dto.KakaoUserResponseDto;
+import com.capston.bellywelly.global.feign.dto.kakao.KakaoUserResponseDto;
 
 @FeignClient(name = "kakaoUser", url = "https://kapi.kakao.com/v2/user/me")
 public interface KakaoUserClient {

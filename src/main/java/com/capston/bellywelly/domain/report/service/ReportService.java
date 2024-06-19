@@ -5,15 +5,22 @@ import static com.capston.bellywelly.global.SecurityUtil.*;
 import java.time.LocalDate;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.capston.bellywelly.domain.member.entity.Member;
+import com.capston.bellywelly.domain.record.entity.Diet;
+import com.capston.bellywelly.domain.record.service.DefecationService;
+import com.capston.bellywelly.domain.record.service.DietService;
+import com.capston.bellywelly.domain.record.service.MealService;
+import com.capston.bellywelly.domain.record.service.StressService;
 import com.capston.bellywelly.domain.report.dto.DefecationStressGraphDto;
 import com.capston.bellywelly.domain.report.dto.DefecationStressReportResponseDto;
 import com.capston.bellywelly.domain.report.dto.DietReportResponseDto;
@@ -25,6 +32,11 @@ import com.capston.bellywelly.domain.report.entity.ReportMeal;
 import com.capston.bellywelly.domain.report.repository.ReportDefecationStressRepository;
 import com.capston.bellywelly.domain.report.repository.ReportMealRepository;
 import com.capston.bellywelly.domain.report.repository.ReportRepository;
+import com.capston.bellywelly.global.feign.client.gpt.GptReportClient;
+import com.capston.bellywelly.global.feign.dto.gpt.DietBestWorstDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptDefecationStressRequestDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptDietRequestDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptFeedbackRequestDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,7 +48,13 @@ public class ReportService {
 	private final ReportRepository reportRepository;
 	private final ReportMealRepository reportMealRepository;
 	private final ReportDefecationStressRepository reportDefecationStressRepository;
+	private final GptReportClient gptReportClient;
+	private final DietService dietService;
+	private final MealService mealService;
+	private final DefecationService defecationService;
+	private final StressService stressService;
 
+	@Scheduled(cron = "0 0 0 ? * SUN")
 	public void createReport() {  // 일요일 시작 시간에 주간 레포트 자동으로 생성
 
 		// 생성할 레포트 주인, 년, 월, 주차 정보
@@ -47,8 +65,82 @@ public class ReportService {
 		Integer week = getWeekNumber(yesterday);
 
 		// gpt에 일주일간 식사/배변/스트레스 데이터 보내서 총평, best5/worst5 음식 리스트와 설명, 배변 분석, 스트레스 분석 받기
+		List<String> mealNameList = new ArrayList<>();
+		List<Boolean> isLowFodmapList = new ArrayList<>();
+		List<Integer> defecationScoreList = new ArrayList<>();
+		List<Integer> stressDegreeList = new ArrayList<>();
+
+		LocalDate startDate = yesterday.minusDays(6);
+		for (int i = 0; i < 7; i++) {
+			LocalDate day = startDate.plusDays(i);
+			List<Diet> dietList = dietService.findDietListOfDay(day);
+			for (Diet diet : dietList) {
+				mealNameList.addAll(mealService.findMealnameList(diet));
+				isLowFodmapList.addAll(mealService.findIsLowFodmapList(mealNameList));
+			}
+
+			Integer defecationScore = defecationService.getDailyDefecationInfo(member, day.atStartOfDay(),
+				day.atTime(23, 59, 59, 999999999)).getScore();
+			defecationScoreList.add(defecationScore);
+
+			Integer stressDegree = stressService.findStressDegree(member, day);
+			stressDegreeList.add(stressDegree * 20);
+		}
+
+		GptFeedbackRequestDto feedbackRequestDto = GptFeedbackRequestDto.builder()
+			.food(mealNameList).isLowFodmap(isLowFodmapList)
+			.defecation(defecationScoreList).stress(stressDegreeList)
+			.build();
+
+		GptDefecationStressRequestDto defecationStressRequestDto = GptDefecationStressRequestDto.builder()
+			.defecation(defecationScoreList)
+			.stress(stressDegreeList)
+			.build();
+
+		GptDietRequestDto dietRequestDto = new GptDietRequestDto(mealNameList);
+
+		String feedback = gptReportClient.getReportFeedback(feedbackRequestDto).getData();
+		String defecationAnalysis = gptReportClient.getDefecationAnalysis(defecationStressRequestDto).getData();
+		String stressAnalysis = gptReportClient.getStressAnalysis(defecationStressRequestDto).getData();
+		DietBestWorstDto dietAnalysis = gptReportClient.getDietAnalysis(dietRequestDto).getData();
 
 		// Report, ReportMeal, ReportDefecationStress 생성
+		Report report = reportRepository.save(
+			Report.builder()
+				.member(member)
+				.year(year).month(month).week(week)
+				.feedback(feedback).defecationAnalysis(defecationAnalysis).stressAnalysis(stressAnalysis)
+				.build()
+		);
+
+		for (int i = 0; i < 7; i++) {
+			reportDefecationStressRepository.save(
+				ReportDefecationStress.builder()
+					.report(report)
+					.defecationScore(defecationScoreList.get(i))
+					.stressDegree(stressDegreeList.get(i))
+					.build()
+			);
+		}
+
+		dietAnalysis.getBest().forEach(best -> reportMealRepository.save(
+			ReportMeal.builder()
+				.report(report)
+				.meal(mealService.findMealByName(best.getName()))
+				.isBest(true)
+				.description(best.getDesc())
+				.build()
+		));
+
+		dietAnalysis.getWorst().forEach(best -> reportMealRepository.save(
+			ReportMeal.builder()
+				.report(report)
+				.meal(mealService.findMealByName(best.getName()))
+				.isBest(false)
+				.description(best.getDesc())
+				.build()
+		));
+
 	}
 
 	public DietReportResponseDto findDietReport(Integer year, Integer month, Integer week) {

@@ -64,4 +64,10 @@ public class StressService {
 			.sat(stressMap.getOrDefault(DayOfWeek.SATURDAY, null))
 			.build();
 	}
+
+	public Integer findStressDegree(Member member, LocalDate date) {
+		return stressRepository.findByMemberAndCreatedDateBetween(member, date.atStartOfDay(),
+				date.atTime(23, 59, 59, 999999999))
+			.map(Stress::getDegree).orElse(0);
+	}
 }

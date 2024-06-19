@@ -1,5 +1,6 @@
 package com.capston.bellywelly.domain.recommendation.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,9 +9,9 @@ import org.springframework.stereotype.Service;
 import com.capston.bellywelly.domain.record.entity.Diet;
 import com.capston.bellywelly.domain.record.service.DietService;
 import com.capston.bellywelly.domain.record.service.MealService;
-import com.capston.bellywelly.global.feign.client.GptRecClient;
-import com.capston.bellywelly.global.feign.dto.GptDietRequestDto;
-import com.capston.bellywelly.global.feign.dto.GptResponseDto;
+import com.capston.bellywelly.global.feign.client.gpt.GptRecClient;
+import com.capston.bellywelly.global.feign.dto.gpt.GptDietRequestDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptResponseDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,7 +28,7 @@ public class RecommendationService {
 	}
 
 	public List<String> getTodayMealList() {
-		List<Diet> todayDietList = dietService.findTodayDietList();
+		List<Diet> todayDietList = dietService.findDietListOfDay(LocalDate.now());
 		if (todayDietList.isEmpty()) {
 			return null;
 		}

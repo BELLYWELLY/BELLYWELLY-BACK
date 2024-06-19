@@ -1,4 +1,4 @@
-package com.capston.bellywelly.global.feign.dto;
+package com.capston.bellywelly.global.feign.dto.kakao;
 
 import lombok.Builder;
 import lombok.Getter;
