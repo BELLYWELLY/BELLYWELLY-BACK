@@ -31,6 +31,7 @@ import com.capston.bellywelly.domain.report.repository.ReportDefecationStressRep
 import com.capston.bellywelly.domain.report.repository.ReportMealRepository;
 import com.capston.bellywelly.domain.report.repository.ReportRepository;
 import com.capston.bellywelly.global.feign.client.GptReportClient;
+import com.capston.bellywelly.global.feign.dto.GptDefecationStressRequestDto;
 import com.capston.bellywelly.global.feign.dto.GptFeedbackRequestDto;
 
 import lombok.RequiredArgsConstructor;
@@ -81,14 +82,39 @@ public class ReportService {
 			stressDegreeList.add(stressDegree * 20);
 		}
 
-		GptFeedbackRequestDto requestDto = GptFeedbackRequestDto.builder()
+		GptFeedbackRequestDto feedbackRequestDto = GptFeedbackRequestDto.builder()
 			.food(mealNameList).isLowFodmap(isLowFodmapList)
 			.defecation(defecationScoreList).stress(stressDegreeList)
 			.build();
 
-		String feedback = gptReportClient.getReportFeedback(requestDto).getData();
+		GptDefecationStressRequestDto defecationStressRequestDto = GptDefecationStressRequestDto.builder()
+			.defecation(defecationScoreList)
+			.stress(stressDegreeList)
+			.build();
+
+		String feedback = gptReportClient.getReportFeedback(feedbackRequestDto).getData();
+		String defecationAnalysis = gptReportClient.getDefecationAnalysis(defecationStressRequestDto).getData();
+		String stressAnalysis = gptReportClient.getStressAnalysis(defecationStressRequestDto).getData();
 
 		// Report, ReportMeal, ReportDefecationStress 생성
+		Report report = reportRepository.save(
+			Report.builder()
+				.member(member)
+				.year(year).month(month).week(week)
+				.feedback(feedback).defecationAnalysis(defecationAnalysis).stressAnalysis(stressAnalysis)
+				.build()
+		);
+
+		for (int i = 0; i < 7; i++) {
+			reportDefecationStressRepository.save(
+				ReportDefecationStress.builder()
+					.report(report)
+					.defecationScore(defecationScoreList.get(i))
+					.stressDegree(stressDegreeList.get(i))
+					.build()
+			);
+		}
+
 	}
 
 	public DietReportResponseDto findDietReport(Integer year, Integer month, Integer week) {

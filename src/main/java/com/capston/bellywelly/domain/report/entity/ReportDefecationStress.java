@@ -30,14 +30,10 @@ public class ReportDefecationStress {
 	@Column(nullable = false)
 	private Integer stressDegree;
 
-	@Column(nullable = false, length = 16)
-	private String dayOfWeek;
-
 	@Builder
-	public ReportDefecationStress(Report report, Integer defecationScore, Integer stressDegree, String dayOfWeek) {
+	public ReportDefecationStress(Report report, Integer defecationScore, Integer stressDegree) {
 		this.report = report;
 		this.defecationScore = defecationScore;
 		this.stressDegree = stressDegree;
-		this.dayOfWeek = dayOfWeek;
 	}
 }
