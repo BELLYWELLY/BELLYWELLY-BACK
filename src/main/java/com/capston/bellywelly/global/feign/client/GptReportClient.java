@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.capston.bellywelly.global.feign.dto.GptDefecationStressRequestDto;
+import com.capston.bellywelly.global.feign.dto.GptDietRequestDto;
 import com.capston.bellywelly.global.feign.dto.GptFeedbackRequestDto;
+import com.capston.bellywelly.global.feign.dto.GptFoodReportResponseDto;
 import com.capston.bellywelly.global.feign.dto.GptResponseDto;
 
 @FeignClient(name = "chatGptReport", url = "https://model.bellywelly.kro.kr/report")
@@ -19,4 +21,7 @@ public interface GptReportClient {
 
 	@PostMapping("/stress")
 	GptResponseDto getStressAnalysis(@RequestBody GptDefecationStressRequestDto requestDto);
+
+	@PostMapping("/food")
+	GptFoodReportResponseDto getDietAnalysis(@RequestBody GptDietRequestDto requestDto);
 }
