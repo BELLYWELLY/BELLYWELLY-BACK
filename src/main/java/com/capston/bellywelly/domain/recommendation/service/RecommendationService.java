@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import com.capston.bellywelly.domain.record.entity.Diet;
 import com.capston.bellywelly.domain.record.service.DietService;
 import com.capston.bellywelly.domain.record.service.MealService;
-import com.capston.bellywelly.global.feign.client.GptRecClient;
-import com.capston.bellywelly.global.feign.dto.GptDietRequestDto;
-import com.capston.bellywelly.global.feign.dto.GptResponseDto;
+import com.capston.bellywelly.global.feign.client.gpt.GptRecClient;
+import com.capston.bellywelly.global.feign.dto.gpt.GptDietRequestDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptResponseDto;
 
 import lombok.RequiredArgsConstructor;
 

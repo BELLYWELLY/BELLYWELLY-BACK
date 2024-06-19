@@ -32,11 +32,11 @@ import com.capston.bellywelly.domain.report.entity.ReportMeal;
 import com.capston.bellywelly.domain.report.repository.ReportDefecationStressRepository;
 import com.capston.bellywelly.domain.report.repository.ReportMealRepository;
 import com.capston.bellywelly.domain.report.repository.ReportRepository;
-import com.capston.bellywelly.global.feign.client.GptReportClient;
-import com.capston.bellywelly.global.feign.dto.DietBestWorstDto;
-import com.capston.bellywelly.global.feign.dto.GptDefecationStressRequestDto;
-import com.capston.bellywelly.global.feign.dto.GptDietRequestDto;
-import com.capston.bellywelly.global.feign.dto.GptFeedbackRequestDto;
+import com.capston.bellywelly.global.feign.client.gpt.GptReportClient;
+import com.capston.bellywelly.global.feign.dto.gpt.DietBestWorstDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptDefecationStressRequestDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptDietRequestDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptFeedbackRequestDto;
 
 import lombok.RequiredArgsConstructor;
 

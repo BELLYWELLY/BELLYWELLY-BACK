@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 import com.capston.bellywelly.domain.member.dto.LoginResponseDto;
 import com.capston.bellywelly.domain.member.entity.Member;
 import com.capston.bellywelly.domain.member.repository.MemberRepository;
-import com.capston.bellywelly.global.feign.client.KakaoTokenClient;
-import com.capston.bellywelly.global.feign.client.KakaoUserClient;
-import com.capston.bellywelly.global.feign.dto.KakaoAccountDto;
-import com.capston.bellywelly.global.feign.dto.KakaoTokenRequestDto;
-import com.capston.bellywelly.global.feign.dto.KakaoTokenResponseDto;
-import com.capston.bellywelly.global.feign.dto.KakaoUserResponseDto;
+import com.capston.bellywelly.global.feign.client.kakao.KakaoTokenClient;
+import com.capston.bellywelly.global.feign.client.kakao.KakaoUserClient;
+import com.capston.bellywelly.global.feign.dto.kakao.KakaoAccountDto;
+import com.capston.bellywelly.global.feign.dto.kakao.KakaoTokenRequestDto;
+import com.capston.bellywelly.global.feign.dto.kakao.KakaoTokenResponseDto;
+import com.capston.bellywelly.global.feign.dto.kakao.KakaoUserResponseDto;
 import com.capston.bellywelly.global.jwt.JwtTokenProvider;
 
 import lombok.RequiredArgsConstructor;

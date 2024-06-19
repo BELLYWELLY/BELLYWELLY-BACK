@@ -1,14 +1,14 @@
-package com.capston.bellywelly.global.feign.client;
+package com.capston.bellywelly.global.feign.client.gpt;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.capston.bellywelly.global.feign.dto.GptDefecationStressRequestDto;
-import com.capston.bellywelly.global.feign.dto.GptDietRequestDto;
-import com.capston.bellywelly.global.feign.dto.GptFeedbackRequestDto;
-import com.capston.bellywelly.global.feign.dto.GptFoodReportResponseDto;
-import com.capston.bellywelly.global.feign.dto.GptResponseDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptDefecationStressRequestDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptDietRequestDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptFeedbackRequestDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptFoodReportResponseDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptResponseDto;
 
 @FeignClient(name = "chatGptReport", url = "https://model.bellywelly.kro.kr/report")
 public interface GptReportClient {

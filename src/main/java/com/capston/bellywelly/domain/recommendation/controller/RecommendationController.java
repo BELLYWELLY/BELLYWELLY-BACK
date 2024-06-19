@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capston.bellywelly.domain.recommendation.service.RecommendationService;
-import com.capston.bellywelly.global.feign.dto.GptResponseDto;
+import com.capston.bellywelly.global.feign.dto.gpt.GptResponseDto;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

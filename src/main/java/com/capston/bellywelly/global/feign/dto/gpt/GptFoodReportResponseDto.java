@@ -1,4 +1,4 @@
-package com.capston.bellywelly.global.feign.dto;
+package com.capston.bellywelly.global.feign.dto.gpt;
 
 import lombok.Getter;
 
