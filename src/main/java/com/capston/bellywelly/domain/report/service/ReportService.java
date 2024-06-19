@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
@@ -52,6 +53,7 @@ public class ReportService {
 	private final DefecationService defecationService;
 	private final StressService stressService;
 
+	@Scheduled(cron = "0 0 0 ? * SUN")
 	public void createReport() {  // 일요일 시작 시간에 주간 레포트 자동으로 생성
 
 		// 생성할 레포트 주인, 년, 월, 주차 정보

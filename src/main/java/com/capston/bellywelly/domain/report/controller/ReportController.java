@@ -2,7 +2,6 @@ package com.capston.bellywelly.domain.report.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,12 +21,6 @@ import lombok.RequiredArgsConstructor;
 public class ReportController {
 
 	private final ReportService reportService;
-
-	@PostMapping()
-	@ResponseStatus(HttpStatus.CREATED)
-	public void createReport() {
-		reportService.createReport();
-	}
 
 	@GetMapping("/diet")
 	@ResponseStatus(HttpStatus.OK)
