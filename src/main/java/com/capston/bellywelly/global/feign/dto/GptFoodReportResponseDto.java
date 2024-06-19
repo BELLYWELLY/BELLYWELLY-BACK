@@ -1,12 +1,10 @@
 package com.capston.bellywelly.global.feign.dto;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
-public class GptResponseDto {
+public class GptFoodReportResponseDto {
 
 	private int status;
-	private String data;
+	private DietBestWorstDto data;
 }

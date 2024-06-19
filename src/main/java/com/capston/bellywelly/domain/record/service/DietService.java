@@ -125,10 +125,9 @@ public class DietService {
 		return (lowFodmapCount > highFodmapCount) ? "good" : "bad";
 	}
 
-	public List<Diet> findTodayDietList() {
-		LocalDate today = LocalDate.now();
+	public List<Diet> findDietListOfDay(LocalDate date) {
 		Member member = getCurrentUser();
-		return dietRepository.findAllByMemberAndCreatedDateBetween(member, today.atStartOfDay(),
-			today.atTime(23, 59, 59, 999999999));
+		return dietRepository.findAllByMemberAndCreatedDateBetween(member, date.atStartOfDay(),
+			date.atTime(23, 59, 59, 999999999));
 	}
 }
