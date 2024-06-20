@@ -70,7 +70,7 @@ Swagger: https://api.bellywelly.kro.kr/swagger-ui/index.html <br>
 git clone https://github.com/BellyWelly/BellyWelly-BE.git
 ```
 
-### (2) 필요한 Python 패키지 설치
+### (2) 설정 파일 작성
 
 BellyWelly 프로젝트를 실행하기 위해서는 application.yml을 작성해야 합니다. <br>
 `BellyWelly-BE/src/main/resources/` 에 application.yml을 생성하고, 아래 코드를 복사하여 붙여넣습니다. <br>
