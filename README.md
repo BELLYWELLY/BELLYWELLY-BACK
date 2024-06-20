@@ -2,11 +2,16 @@
 [캡스톤디자인과창업프로젝트] 17. 출발드림팀 <br>
 BellyWelly 백엔드 레포지토리
 
+
+## 🌐 배포 주소
+배포된 서버 URL 주소: https://api.bellywelly.kro.kr
+<br>
+
+![image](https://github.com/BellyWelly/BellyWelly-BE/assets/121334671/a495a745-c481-4934-9822-e459c845da1a)
+
 <br>
 
 ## 💡 프로젝트 개요
-![image](https://github.com/BellyWelly/BellyWelly-BE/assets/121334671/a495a745-c481-4934-9822-e459c845da1a)
-
 현대 사회에 불규칙적인 생활 패턴과 스트레스로 인해 장 건강에 큰 영향을 받는 사람들이 점차 증가하고 있습니다. 국내에서 연간 약 150만명의 과민대장증후군 환자가 발생했고, 이들은 일상 생활에 큰 불편을 겪고 있습니다.
 
 대부분의 사람들은 자신의 장 건강 상태를 정확하게 알지 못하며, 자신에게 맞는 건강한 식습관과 생활 패턴을 구축하는 것에 어려움을 느끼고 있습니다. 하지만 이들의 문제를 해결할 수 있는 사용성 좋은 어플리케이션은 현재 부재합니다.
@@ -59,7 +64,8 @@ EC2에 Nginx를 설치하여 80번 포트로 들어오는 요청을 8080번 포�
 ## API 명세서
 Swagger: https://api.bellywelly.kro.kr/swagger-ui/index.html <br>
 
-![image](https://github.com/BellyWelly/BellyWelly-BE/assets/121334671/e8d492ee-f8ad-4de8-bc6f-2ce9d8e16d79)
+![image](https://github.com/BellyWelly/BellyWelly-BE/assets/121334671/6fc68ed1-5abd-458d-9b2b-f30757702680)
+
 
 <br>
 
@@ -133,9 +139,6 @@ nohup java -jar bellywelly-0.0.1-SNAPSHOT.jar &
 로컬에서 실행했다면 `localhost:8080/home` 과 같이 입력하여 접속할 수 있습니다.
 
 <br>
-
-## 🌐 배포 주소
-배포된 서버 URL 주소: https://api.bellywelly.kro.kr
 
 
 ## 📕 향후 과제 및 개선 방향
