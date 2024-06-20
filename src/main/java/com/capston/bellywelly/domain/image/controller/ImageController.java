@@ -24,7 +24,7 @@ public class ImageController {
 
 	private final S3Service s3Service;
 
-	@Operation(summary = "S3 Presigned URL 발급")
+	@Operation(summary = "S3 이미지 업로드")
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public String createPresignedUrl(@RequestPart(value = "image") MultipartFile image) {
